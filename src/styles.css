@@ -3,7 +3,7 @@ body {
   height: 100vh;
   background: radial-gradient(
     circle,
-    rgb(251, 231, 156) 0%,
+    rgb(251, 197, 90) 0%,
     rgb(71, 44, 160) 100%
   );
   display: flex;
