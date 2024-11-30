@@ -17,21 +17,18 @@ import { passwordMatchValidator } from '../../validators/password-match.validato
 })
 export class ProfileEditorComponent {
   myForm = new FormGroup({
-    registrace: new FormGroup({
-      firstName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(15),
-      ]),
-      lastName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(20),
-      ]),
-    }),
-
-    prihlasovaciUdaje: new FormGroup(
+    formData: new FormGroup(
       {
+        firstName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(15),
+        ]),
+        lastName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ]),
         email: new FormControl('', [
           Validators.required,
           Validators.email,
@@ -50,36 +47,23 @@ export class ProfileEditorComponent {
     ),
   });
 
-  get firstName() {
-    return this.myForm.get('registrace.firstName');
-  }
-  get lastName() {
-    return this.myForm.get('registrace.lastName');
+  get formData() {
+    return this.myForm.get('formData') as FormGroup;
   }
 
-  get email() {
-    return this.myForm.get('prihlasovaciUdaje.email');
-  }
-  get password() {
-    return this.myForm.get('prihlasovaciUdaje.password');
-  }
-
-  get prihlasovaciUdaje() {
-    return this.myForm.get('prihlasovaciUdaje') as FormGroup;
-  }
-  get terms() {
-    return this.myForm.get('terms');
+  get confirmPassword() {
+    return this.myForm.get('confirmPassword');
   }
 
   onSubmit() {
     console.log('Form valid:', this.myForm.valid);
-    console.log(this.myForm.errors); // Zkontroluj, zda nemá formulář chyby
-    console.log(this.myForm.value); // Vypíše hodnoty formuláře
+    console.log(this.myForm.errors);
+    console.log(this.myForm.value);
 
     if (this.myForm.valid) {
       console.warn('Form submitted:', this.myForm.value);
     } else {
-      this.myForm.markAllAsTouched(); // Vynutí zobrazení chyb
+      this.myForm.markAllAsTouched();
     }
   }
 }

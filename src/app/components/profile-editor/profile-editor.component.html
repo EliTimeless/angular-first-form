@@ -1,9 +1,8 @@
 <div class="container-fluid">
   <div class="form-container">
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-      <div formGroupName="registrace">
+      <div formGroupName="formData">
         <h2>Registrace</h2>
-
         <div class="row mt-4">
           <div class="col-sm-6">
             <label for="firstName">Jméno:</label>
@@ -16,18 +15,24 @@
                 title="zadejte své jméno"
                 placeholder="Marie"
                 autocomplete="on"
-                required
               />
               <div
                 *ngIf="
-                  firstName?.invalid && (firstName?.dirty || firstName?.touched)
+                  myForm.get('formData.firstName')?.invalid &&
+                  (myForm.get('formData.firstName')?.dirty ||
+                    myForm.get('formData.firstName')?.touched)
                 "
                 class="text-danger form-text"
               >
-                <small *ngIf="firstName?.hasError('required')"
+                <small
+                  *ngIf="myForm.get('formData.firstName')?.hasError('required')"
                   >Jméno je povinné.</small
                 >
-                <small *ngIf="firstName?.hasError('minlength')">
+                <small
+                  *ngIf="
+                    myForm.get('formData.firstName')?.hasError('minlength')
+                  "
+                >
                   Jméno musí mít alespoň 3 znaky.
                 </small>
               </div>
@@ -44,124 +49,137 @@
                 title="zadejte své příjmení"
                 placeholder="Nováková"
                 autocomplete="on"
-                required
               />
               <div
                 *ngIf="
-                  lastName?.invalid && (lastName?.dirty || lastName?.touched)
+                  myForm.get('formData.lastName')?.invalid &&
+                  (myForm.get('formData.lastName')?.dirty ||
+                    myForm.get('formData.lastName')?.touched)
                 "
                 class="text-danger form-text"
               >
-                <small *ngIf="lastName?.hasError('required')">
+                <small
+                  *ngIf="myForm.get('formData.lastName')?.hasError('required')"
+                >
                   Příjmení je povinné.
                 </small>
-                <small *ngIf="lastName?.hasError('minlength')">
+                <small
+                  *ngIf="myForm.get('formData.lastName')?.hasError('minlength')"
+                >
                   Příjmení musí mít alespoň 3 znaky.
                 </small>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div formGroupName="prihlasovaciUdaje" class="mt-3">
-        <div class="row">
-          <label for="email">Email:</label>
-          <input
-            id="email"
-            type="email"
-            class="form-control flex-column"
-            formControlName="email"
-            title="zadejte svůj email"
-            placeholder="marie@email.com"
-            autocomplete="email"
-            required
-          />
-          <div
-            *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-            class="text-danger form-text"
-          >
-            <small *ngIf="email?.hasError('required')">
-              Emailová adresa je povinná.
-            </small>
-            <small *ngIf="email?.hasError('minlength')">
-              Email musí mít alespoň 10 znaků.
-            </small>
-          </div>
-        </div>
-        <div class="row">
-          <label for="password">Heslo:</label>
-          <input
-            class="flex-column form-control"
-            id="password"
-            formControlName="password"
-            type="password"
-            title="zadejte heslo"
-            placeholder="heslo1234"
-            autocomplete="current-password"
-            required
-          />
-          <div
-            *ngIf="
-              prihlasovaciUdaje.get('password')?.invalid &&
-              (prihlasovaciUdaje.get('password')?.dirty ||
-                prihlasovaciUdaje.get('password')?.touched)
-            "
-            class="text-danger form-text"
-          >
-            <small
-              *ngIf="prihlasovaciUdaje.get('password')?.hasError('required')"
-            >
-              Heslo je povinné.
-            </small>
-            <small
-              *ngIf="prihlasovaciUdaje.get('password')?.hasError('minlength')"
-            >
-              Heslo musí mít alespoň 10 znaků.
-            </small>
-          </div>
-        </div>
-
-        <div class="row">
-          <label for="confirmPassword">Opakovat heslo:</label>
-          <input
-            class="flex-column form-control"
-            id="confirmPassword"
-            formControlName="confirmPassword"
-            type="password"
-            placeholder="Zadejte znovu heslo"
-            required
-          />
-          <div
-            *ngIf="
-              prihlasovaciUdaje.hasError('passwordMismatch') &&
-              (prihlasovaciUdaje.get('confirmPassword')?.dirty ||
-                prihlasovaciUdaje.get('confirmPassword')?.touched)
-            "
-            class="text-danger form-text"
-          >
-            <small>Hesla se musí shodovat.</small>
-          </div>
-        </div>
-        <div class="row m-1">
-          <div class="form-check">
+        <div>
+          <div class="col-sm">
+            <label for="email">Email:</label>
             <input
-              formControlName="terms"
-              type="checkbox"
-              class="form-check-input"
-              id="terms"
-              required
+              id="email"
+              formControlName="email"
+              type="email"
+              class="form-control"
+              title="zadejte svůj email"
+              placeholder="marie@email.com"
+              autocomplete="email"
             />
-            <div>
-              <label class="form-check-label m-1" for="terms"
-                >Souhlasím se zpracováním
-                <a
-                  href="https://www.mvcr.cz/gdpr/clanek/co-je-gdpr.aspx"
-                  target="_blank"
-                  >osobních údajů</a
-                >.
-              </label>
-              <div *ngIf="terms?.invalid && terms?.touched" class="text-danger">
-                Musíte souhlasit s podmínkami.
+            <div
+              *ngIf="
+                myForm.get('formData.email')?.invalid &&
+                (myForm.get('formData.email')?.dirty ||
+                  myForm.get('formData.email')?.touched)
+              "
+              class="text-danger form-text"
+            >
+              <small *ngIf="myForm.get('formData.email')?.hasError('required')">
+                Emailová adresa je povinná.
+              </small>
+              <small
+                *ngIf="myForm.get('formData.email')?.hasError('minlength')"
+              >
+                Email musí mít alespoň 10 znaků.
+              </small>
+            </div>
+          </div>
+          <div class="col-sm">
+            <label for="password">Heslo:</label>
+            <input
+              id="password"
+              formControlName="password"
+              type="password"
+              class="form-control"
+              title="zadejte heslo"
+              placeholder="heslo123456"
+              autocomplete="current-password"
+            />
+            <div
+              *ngIf="
+                myForm.get('formData.password')?.invalid &&
+                (myForm.get('formData.password')?.dirty ||
+                  myForm.get('formData.password')?.touched)
+              "
+              class="text-danger form-text"
+            >
+              <small
+                *ngIf="myForm.get('formData.password')?.hasError('required')"
+              >
+                Heslo je povinné.
+              </small>
+              <small
+                *ngIf="myForm.get('formData.password')?.hasError('minlength')"
+              >
+                Heslo musí mít alespoň 10 znaků.
+              </small>
+            </div>
+
+            <div class="col-sm">
+              <label for="confirmPassword">Opakovat heslo:</label>
+              <input
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                type="password"
+                class="form-control"
+                placeholder="Zadejte znovu heslo"
+              />
+              <div
+                *ngIf="
+                  formData.hasError('passwordMismatch') &&
+                  (formData.get('password')?.dirty ||
+                    formData.get('password')?.touched)
+                "
+                class="text-danger form-text"
+              >
+                <small>Hesla se musí shodovat.</small>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="form-check">
+                <input
+                  id="terms"
+                  formControlName="terms"
+                  type="checkbox"
+                  class="form-check-input"
+                />
+                <div class="col-sm">
+                  <label class="form-check-label m-1" for="terms"
+                    >Souhlasím se zpracováním
+                    <a
+                      href="https://www.mvcr.cz/gdpr/clanek/co-je-gdpr.aspx"
+                      target="_blank"
+                      >osobních údajů</a
+                    >.
+                  </label>
+                  <div
+                    *ngIf="
+                      myForm.get('formData.terms')?.invalid &&
+                      myForm.get('formData.terms')?.touched
+                    "
+                    class="text-danger"
+                  >
+                    Musíte souhlasit s podmínkami.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
